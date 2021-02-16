@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block head_content %}
+    <title>OverRoasted recipes</title>
+{% endblock%}
+
+{% block container %}
+    <div class="container">
+        <div class="row">
+
+            {% for recipe in recipes %}
+                {% include "recipes/recipe_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+    {% include "pagination.html" %}
+{% endblock %}

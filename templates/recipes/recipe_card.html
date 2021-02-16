@@ -1,0 +1,16 @@
+<div class="col-sm-12 col-md-8 offset-md-2 mt-5 p-0 post-container">
+    <div class="media pt-3 pl-3 pb-1">=
+        <div class="media-body">
+            <br><p style="margin-top: 5px;">{{ recipe.title }}</p></br>
+            <p>{{ recipe.body }}</p>
+        </div>
+    </div>
+
+    <p class="mt-1 ml-2" >
+        <br>Votes:</br> {{ recipe.count_votes }} 
+    </p>
+
+    <p class="ml-2 mt-0 mb-2">
+        <b>{{ recipe.user }}</b> - <small>{{ recipe.created }}</small>
+    </p>
+</div>
