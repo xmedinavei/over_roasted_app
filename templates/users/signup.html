@@ -1,0 +1,22 @@
+
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<title>OverRoasted sign up</title>
+{% endblock %}
+
+{% block container %}
+{% include "users/nav.html" %}
+    <h1>Signup</h1>
+    <form action="{% url 'users:signup' %}" method="POST">
+        <div>
+            {% csrf_token %}
+            {{ form.as_p }}
+        </div>
+        <div>
+            <button class="btn btn-primary btn-block mt-5" type="submit">
+                Register!
+            </button>
+        </div>
+    </form>
+{% endblock container %}
