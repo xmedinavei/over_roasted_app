@@ -5,10 +5,26 @@
             <p>{{ recipe.body }}</p>
         </div>
     </div>
-
     <p class="mt-1 ml-2" >
         <br>Votes:</br> {{ recipe.count_votes }} 
     </p>
+
+    <h6>Vote this recipe</h1>
+    <form action="{% url "recipes:vote" %}" method="POST">{% csrf_token %}
+        <input type="checkbox" name="rate" value="-5">
+        <label for="rate"> -5 </label>|
+        <input type="checkbox" name="rate" value="-2">
+        <label for="rate"> -2 </label>|
+        <input type="checkbox" name="rate" value="-1">
+        <label for="rate"> -1 </label>|
+        <input type="checkbox" name="rate" value="+1">
+        <label for="rate"> +1 </label>|
+        <input type="checkbox" name="rate" value="+2">
+        <label for="rate"> +2 </label>|
+        <input type="checkbox" name="rate" value="+5">
+        <label for="rate"> +5 </label>
+        <button type="submit" name="recipe_id" value="{{ recipe.id }}">Vote</button>
+    </form>
 
     <p class="ml-2 mt-0 mb-2">
         <b>{{ recipe.user }}</b> - <small>{{ recipe.created }}</small>

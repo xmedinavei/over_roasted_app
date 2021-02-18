@@ -1,4 +1,5 @@
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +14,7 @@ SECRET_KEY = '3+7ekm6aghztb!h1b@xcvvjid8$o%rb7bb3bha446)d1pk573*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -115,7 +116,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/recipes/' 
 LOGOUT_REDIRECT_URL = LOGIN_URL
+
+django_heroku.settings(locals())
