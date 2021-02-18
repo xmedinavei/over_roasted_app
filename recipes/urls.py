@@ -15,9 +15,14 @@ urlpatterns = [
         view=views.CreateRecipeView.as_view(),
         name='create'
     ),
-    # path(
-    #     route='<int:pk>/',
-    #     view=views.RecipeVoteView.as_view(),
-    #     name='vote'
-    # )
+    path(
+        route='vote/',
+        view=views.vote_view,
+        name='vote'
+    ),
+    path(
+        route='results/',
+        view=views.results_view,
+        name='resuts'
+    )
 ]
