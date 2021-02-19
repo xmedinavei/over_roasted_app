@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block head_content %}
+    <title>OverRoasted results</title>
+{% endblock%}
+
+{% block container %}
+    <div class="container">
+
+        <div class="media pt-3 pl-3 pb-1">
+            <div class="media-body">
+                <br><p style="margin-top: 5px;">{{ recipe.title }}</p></br>
+                <p>{{ recipe.body }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Top 10</h2>
+                {% for t10 in top10 %}
+                    {{ t10 }} <br>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Top 10 last 5 minutes</h2>
+                {% for t10_5 in top10_last_5_min %}
+                    {{ t10_5 }} <br>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Top 10 last hour</h2>
+                {% for t10_h in top10_last_hour %}
+                    {{ t10_h }} <br>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Top 10 last day</h2>
+                {% for t10_d in top10_last_day %}
+                    {{ t10_d }} <br>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Usuario mas exigente</h2>
+                    {{ u_exigente }}
+            </div>
+            <br>
+            <div class="media pt-3 pl-3 pb-1">
+                <h2>Usuario menos exigente</h2>
+                <h5>El que menos ha votado</h5>
+                    {{ u_exigente }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -23,6 +23,6 @@ urlpatterns = [
     path(
         route='results/',
         view=views.results_view,
-        name='resuts'
+        name='results'
     )
 ]

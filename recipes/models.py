@@ -23,10 +23,6 @@ class Recipe(models.Model):
     def __str__(self):
         return f'{self.title} by @{self.user.username}'
 
-    @property
-    def count_votes(self):
-        return self.reciperanking_set.all().count()
-
     def save(self, *args, **kwargs):
         user = self.user
         last_creation = user.recipe_set.all().last().created
@@ -34,6 +30,37 @@ class Recipe(models.Model):
              super(Recipe, self).save(*args, **kwargs)
         else:
             raise ValidationError(_('You can create a recipe every 5 minutes!'))
+
+    @property
+    def count_votes(self):
+        return self.reciperanking_set.all().count()
+
+    @property
+    def sum_votes(self):
+        ranking = self.reciperanking_set.all()
+        ranks = [r.rank for r in ranking]
+        return sum(ranks)
+    
+    @property
+    def sum_votes_last_5_min(self):
+        five_min_ago = timezone.now() - timedelta(minutes=5)
+        ranking = self.reciperanking_set.filter(created__gte=five_min_ago)
+        ranks = [r.rank for r in ranking]
+        return sum(ranks)
+
+    @property
+    def sum_votes_last_hour(self):
+        hour_ago = timezone.now() - timedelta(hours=1)
+        ranking = self.reciperanking_set.filter(created__gte=hour_ago)
+        ranks = [r.rank for r in ranking]
+        return sum(ranks)
+
+    @property
+    def sum_votes_last_day(self):
+        day_ago = timezone.now() - timedelta(days=1)
+        ranking = self.reciperanking_set.filter(created__gte=day_ago)
+        ranks = [r.rank for r in ranking]
+        return sum(ranks)
 
 
 class RecipeRanking(models.Model):

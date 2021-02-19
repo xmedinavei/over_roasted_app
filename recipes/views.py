@@ -5,6 +5,7 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.db.models import Count
+from django.utils import timezone
 
 #Forms
 from recipes.forms import RecipeForm
@@ -12,6 +13,11 @@ from recipes.forms import RecipeForm
 #Models
 from recipes.models import Recipe, RecipeRanking
 from django.contrib.auth.models import User
+
+# Utils
+from datetime import timedelta
+from recipes.utils import *
+from statistics import mean
 
 
 class RecipeFeedView(LoginRequiredMixin, ListView):
@@ -54,10 +60,48 @@ def vote_view(request):
         )
     return redirect(request.META.get('HTTP_REFERER'))
 
-def results_view(self):
-    if request.GET:
-        top_recipes = Recipe.objects.annotate(
-            ranking_count=Count('reciperanking')
-        )[:10][::-1]
-    pass
 
+def results_view(request):
+    '''
+    functions:
+    top_10(), top_10_last_5_min(), top_10_last_hour(), top_10_last_day(), comensal_exigente_score(u)
+    are created in recipes/utils.py
+    '''
+
+    top10 = top_10() # Top 10 score
+    top10_last_5_min = top_10_last_5_min()
+    top10_last_hour = top_10_last_hour()
+    top10_last_day = top_10_last_day()
+
+    # Comensal mas exigente
+    u_exigente_dict = {u:comensal_exigente_score(u) for u in User.objects.all()}
+    u_exigente_dict_sorted = sorted(u_exigente_dict.items(), key=lambda x: x[1], reverse=True)
+    u_exigente = next(iter(u_exigente_dict_sorted))[0]
+
+    # Comensal menos exigente: El que menos ha votado
+    u_votes_dict = {u:Recipe.objects.all().filter(user=u).count() for u in User.objects.all()}
+    u_votes_dict_sorted = sorted(u_votes_dict.items(), key=lambda x: x[1])
+    u_menos_exigente = next(iter(u_votes_dict_sorted))[0]
+
+    # Render
+    context = {}
+    context['top10'] = top10
+    context['top10_last_5_min'] = top10_last_5_min
+    context['top10_last_hour'] = top10_last_hour
+    context['top10_last_day'] = top10_last_day
+    context['u_exigente'] = u_exigente
+    context['u_menos_exigente'] = u_menos_exigente
+    
+    return render(request=request, template_name='recipes/results.html', context=context)
+
+
+
+
+
+
+
+
+        
+
+
+        
