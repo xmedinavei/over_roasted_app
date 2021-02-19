@@ -5,7 +5,10 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.db.models import Count
+<<<<<<< HEAD
 from django.utils import timezone
+=======
+>>>>>>> 54d606264a3bf4b31937f94189cfbcc1111841ac
 
 #Forms
 from recipes.forms import RecipeForm
@@ -13,11 +16,14 @@ from recipes.forms import RecipeForm
 #Models
 from recipes.models import Recipe, RecipeRanking
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 
 # Utils
 from datetime import timedelta
 from recipes.utils import *
 from statistics import mean
+=======
+>>>>>>> 54d606264a3bf4b31937f94189cfbcc1111841ac
 
 
 class RecipeFeedView(LoginRequiredMixin, ListView):
@@ -60,6 +66,7 @@ def vote_view(request):
         )
     return redirect(request.META.get('HTTP_REFERER'))
 
+<<<<<<< HEAD
 
 def results_view(request):
     '''
@@ -105,3 +112,12 @@ def results_view(request):
 
 
         
+=======
+def results_view(self):
+    if request.GET:
+        top_recipes = Recipe.objects.annotate(
+            ranking_count=Count('reciperanking')
+        )[:10][::-1]
+    pass
+
+>>>>>>> 54d606264a3bf4b31937f94189cfbcc1111841ac
